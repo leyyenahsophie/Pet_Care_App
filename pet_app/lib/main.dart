@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/database_services.dart';
 import 'package:sqflite/sqflite.dart';
+import 'register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,28 +14,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pet Care App',
+      initialRoute: '/register',
+      routes: {
+        '/register': (context) => const RegisterPage(),
+        '/main': (context) => const MainPage(title: 'Pet Care App'),
+      },
       theme: ThemeData(
         // This is the theme of your application.
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MainPage(title: 'Pet App Main Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key, required this.title});
 
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainPageState extends State<MainPage> {
 
   //create instance of database service
   final DatabaseServices _databaseService = DatabaseServices.instance;
@@ -47,13 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text("Welcome to Pet Care App"),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('Default Text'),
+            const Text('This is the main page'),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

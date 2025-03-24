@@ -10,8 +10,10 @@ class DatabaseServices {
   final String _petTableName = 'pet';
   final String _logTableName = 'log';
 
+  final String _name = 'name';
   final String _usernameColumn = 'username';
   final String _passwordColumn = 'password';
+  final String _firstNameColumn = 'firstName';
   final String _petNameColumn = 'name';
   final String _petAgeColumn = 'age';
   final String _petSpeciesColumn = 'species';
@@ -40,6 +42,7 @@ class DatabaseServices {
         db.execute(''' 
         CREATE TABLE $_loginTableName (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
+          $_firstNameColumn TEXT NOT NULL,
           $_usernameColumn TEXT NOT NULL,
           $_passwordColumn TEXT NOT NULL
         )
@@ -47,7 +50,6 @@ class DatabaseServices {
         CREATE TABLE $_petTableName  (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           $_petNameColumn TEXT NOT NULL,
-          $_petAgeColumn INTEGER NOT NULL,
           $_petSpeciesColumn TEXT NOT NULL,
           $_petScheduleColumn INTEGER NOT NULL,
           
