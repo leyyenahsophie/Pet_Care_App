@@ -15,6 +15,7 @@ class DatabaseServices {
   final String _petNameColumn = 'name';
   final String _petAgeColumn = 'age';
   final String _petSpeciesColumn = 'species';
+  final String _petScheduleColumn = 'schedule';
   final String _logDateColumn = 'logDate';
   final String _logTypeColumn = 'logType';
   final String _logDescriptionColumn = 'logDescription';
@@ -48,6 +49,7 @@ class DatabaseServices {
           $_petNameColumn TEXT NOT NULL,
           $_petAgeColumn INTEGER NOT NULL,
           $_petSpeciesColumn TEXT NOT NULL,
+          $_petScheduleColumn INTEGER NOT NULL,
           
         )
 
@@ -64,5 +66,24 @@ class DatabaseServices {
     return database;
   }
 
-}
+  void addLogin(String username, String password) async {
+    final db = await database;
+    await db.insert(_loginTableName, {
+      _usernameColumn: username,
+      //encrypt password
+      _passwordColumn: password,
+    });
+  }
 
+  void addPet(String name, int age,int schedule) async {
+    final db = await database;
+    await db.insert(_petTableName, {
+      _petNameColumn: name,
+      _petAgeColumn: age,
+      _petSpeciesColumn: 'bunny',
+      _petScheduleColumn: schedule,
+    });
+  }
+
+
+}
