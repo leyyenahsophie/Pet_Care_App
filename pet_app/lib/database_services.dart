@@ -86,7 +86,21 @@ class DatabaseServices {
       _petScheduleColumn: schedule,
     });
   }
+  
+//leyyenah's code
+  void addLog(int petId, String logType, String logDescription) async {
+    final db = await database;
+    await db.insert(_logTableName, {
+      _logDateColumn: DateTime.now().toIso8601String(), // Current date and time
+      _logTypeColumn: logType,
+      _logDescriptionColumn: logDescription,
+      'petId': petId, // Reference the petId
+    });
+  }
 
+
+
+//verify login
   Future<int?> verifyLogin(String username, String password) async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db.query(
