@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/database_services.dart';
 import 'package:flutter/services.dart';
+import 'app_colors.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
