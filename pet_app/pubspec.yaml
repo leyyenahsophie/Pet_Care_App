@@ -37,6 +37,9 @@ dependencies:
   sqflite: ^2.3.0
   path: ^1.8.3
   bottom_navy_bar: ^6.1.0
+  intl: ^0.20.2
+  flutter_form_builder: ^10.0.1
+
 
 dev_dependencies:
   flutter_test:

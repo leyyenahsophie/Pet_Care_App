@@ -3,6 +3,7 @@ import 'package:pet_app/database_services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'register_page.dart';
+import 'login_page.dart';
 import 'settings_page.dart';
 import 'pet_guide_page.dart';
 import 'app_colors.dart';
@@ -67,7 +68,7 @@ class _MainPageState extends State<MainPage> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text("Welcome to Pet Care App"),
+          title: Text("Pet Care App"),
         ),
         body: SizedBox.expand(
           child: PageView(
@@ -80,7 +81,10 @@ class _MainPageState extends State<MainPage> {
             children: [
               Container(color: AppColors.background,
               child: Center(
-                child: Text("Home"),
+                        child: ElevatedButton(
+        onPressed: () => Navigator.push(context,
+         MaterialPageRoute(builder: (context) =>  RegisterPage())),
+         child: const Text('Register'),),
               ),
                 ),
               Container(color: AppColors.background,

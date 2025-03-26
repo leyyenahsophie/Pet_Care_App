@@ -87,5 +87,17 @@ class DatabaseServices {
     });
   }
 
-
+  Future<int?> verifyLogin(String username, String password) async {
+    final db = await database;
+    final List<Map<String, dynamic>> results = await db.query(
+      _loginTableName,
+      where: '$_usernameColumn = ? AND $_passwordColumn = ?',
+      whereArgs: [username, password],
+    );
+    
+    if (results.isNotEmpty) {
+      return results.first['id'] as int;
+    }
+    return null;
+  }
 }
