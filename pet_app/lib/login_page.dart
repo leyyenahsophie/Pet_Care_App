@@ -89,7 +89,7 @@ class LoginPageState extends State<LoginPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MainPage(title: 'Pet Care App'),
+                            builder: (context) => MainPage(title: 'Pet Care App', userId: userId),
                           ),
                         );
                       } else {

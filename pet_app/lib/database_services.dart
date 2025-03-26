@@ -68,16 +68,17 @@ class DatabaseServices {
     return database;
   }
 
-  void addLogin(String username, String password) async {
+  Future<int> addLogin(String username, String password, String firstName) async {
     final db = await database;
-    await db.insert(_loginTableName, {
+    final id = await db.insert(_loginTableName, {
       _usernameColumn: username,
-      //encrypt password
       _passwordColumn: password,
+      _firstNameColumn: firstName,
     });
+    return id;
   }
 
-  void addPet(String name, int age,int schedule) async {
+  Future<void> addPet(String name, int age,int schedule) async {
     final db = await database;
     await db.insert(_petTableName, {
       _petNameColumn: name,
@@ -86,7 +87,31 @@ class DatabaseServices {
       _petScheduleColumn: schedule,
     });
   }
+  
+//leyyenah's code
+  void addLog(int petId, String logType, String logDescription) async {
+    final db = await database;
+    await db.insert(_logTableName, {
+      _logDateColumn: DateTime.now().toIso8601String(), // Current date and time
+      _logTypeColumn: logType,
+      _logDescriptionColumn: logDescription,
+      'petId': petId, // Reference the petId
+    });
+  }
 
+  Future<String?> getFirstName(int userId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      _loginTableName,
+      where: 'id = ?',
+      whereArgs: [userId],
+    );
+    if (maps.isEmpty) return null;
+    return maps.first[_firstNameColumn] as String;
+  }
+
+
+//verify login
   Future<int?> verifyLogin(String username, String password) async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db.query(
