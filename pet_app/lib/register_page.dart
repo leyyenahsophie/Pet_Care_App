@@ -16,7 +16,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {  
   //leyyenah's code
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final DatabaseServices _databaseService = DatabaseServices.instance;
 
   final TextEditingController _usernameController = TextEditingController();
@@ -53,30 +53,31 @@ class _RegisterPageState extends State<RegisterPage> {
       try {
         // Add user to the database and get the user ID
         final userId = await _databaseService.addLogin(username, password, firstName);
+        final petId = await _databaseService.addPet(petName, reminderInterval, userId);
 
-        //await _databaseService.addPet(petName, 0, reminderInterval);
 
-        // Navigate to the main page with the user ID
+        // Navigate to the main page with the user ID and petId
         if (mounted) {
+          //dispose();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => MainPage(title: 'Pet Care App', userId: userId),
+              builder: (context) => MainPage(title: 'Pet Care App', userId: userId, petId: petId,),
             ),
           );
         }
       } catch (e) {
+        //dispose();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Error during registration: $e')),
           );
+          
         }
       }
     }
   }
-  //leyyenah's code end [1]
-  
-  //leyyenah's code start [2]
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

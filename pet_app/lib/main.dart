@@ -28,22 +28,23 @@ class MyApp extends StatelessWidget {
       initialRoute: '/register',
       routes: {
         '/register': (context) => const RegisterPage(),
-        '/main': (context) => const MainPage(title: 'Pet Care App', userId: 0),
+        '/main': (context) => const MainPage(title: 'Pet Care App', userId: 0, petId: 0),
       },
       theme: ThemeData(
         // This is the theme of your application.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MainPage(title: 'Pet App Main Page', userId: 0),
+      home: const MainPage(title: 'Pet App Main Page', userId: 0, petId: 0),
     );
   }
 }
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key, required this.title,required this.userId});
+  const MainPage({super.key, required this.title,required this.userId, required this.petId});
 
   final String title;
   final int userId;
+  final int petId;
 
   @override
   State<MainPage> createState() => _MainPageState();
