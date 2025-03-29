@@ -121,8 +121,6 @@ class DatabaseServices {
     });
     return petid;
   }
-
-
   
 //leyyenah's code
   void addLog(int petId, String logType, String logDescription) async {
@@ -134,6 +132,7 @@ class DatabaseServices {
       'petId': petId, // Reference the petId
     });
   }
+
 
   Future<String?> getFirstName(int userId) async {
     final db = await database;
@@ -175,3 +174,4 @@ class DatabaseServices {
   }
 
 }
+

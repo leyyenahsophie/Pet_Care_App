@@ -15,7 +15,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {  
-  //leyyenah's code
   final _formKey = GlobalKey<FormState>();
   final DatabaseServices _databaseService = DatabaseServices.instance;
 
@@ -75,6 +74,14 @@ class _RegisterPageState extends State<RegisterPage> {
           
         }
       }
+    }
+  }
+      // Add user to the database
+      _databaseService.addLogin(username, password);
+      _databaseService.addPet(petName, 0, reminderInterval);
+
+      // Navigate to the main page
+      Navigator.pushReplacementNamed(context, '/main');
     }
   }
 
