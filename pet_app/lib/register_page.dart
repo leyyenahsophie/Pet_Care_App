@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'app_colors.dart';
 import 'login_page.dart';
+import 'main.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -14,8 +15,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {  
-  //leyyenah's code
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final DatabaseServices _databaseService = DatabaseServices.instance;
 
   final TextEditingController _usernameController = TextEditingController();
@@ -49,6 +49,33 @@ class _RegisterPageState extends State<RegisterPage> {
         return;
       }
 
+      try {
+        // Add user to the database and get the user ID
+        final userId = await _databaseService.addLogin(username, password, firstName);
+        final petId = await _databaseService.addPet(petName, reminderInterval, userId);
+
+
+        // Navigate to the main page with the user ID and petId
+        if (mounted) {
+          //dispose();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainPage(title: 'Pet Care App', userId: userId, petId: petId,),
+            ),
+          );
+        }
+      } catch (e) {
+        //dispose();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error during registration: $e')),
+          );
+          
+        }
+      }
+    }
+  }
       // Add user to the database
       _databaseService.addLogin(username, password);
       _databaseService.addPet(petName, 0, reminderInterval);
@@ -57,9 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pushReplacementNamed(context, '/main');
     }
   }
-  //leyyenah's code end [1]
-  
-  //leyyenah's code start [2]
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

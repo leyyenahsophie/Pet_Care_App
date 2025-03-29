@@ -84,12 +84,14 @@ class LoginPageState extends State<LoginPage> {
                       final userId = await _databaseService.verifyLogin(username!, password!);
                       
                       if (userId != null) {
+                        final petId = await _databaseService.getPetId(userId);
                         _userState.userId = userId;
                         _userState.username = username;
+                        _userState.petId = petId;
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MainPage(title: 'Pet Care App'),
+                            builder: (context) => MainPage(title: 'Pet Care App', userId: userId, petId: petId!),
                           ),
                         );
                       } else {
