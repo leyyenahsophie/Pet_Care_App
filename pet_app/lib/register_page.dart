@@ -71,19 +71,9 @@ class _RegisterPageState extends State<RegisterPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Error during registration: $e')),
           );
-          
-        }
-      }
-    }
-  }
-      // Add user to the database
-      _databaseService.addLogin(username, password);
-      _databaseService.addPet(petName, 0, reminderInterval);
-
-      // Navigate to the main page
-      Navigator.pushReplacementNamed(context, '/main');
-    }
-  }
+        
+    }}}}
+  
 
   @override
   Widget build(BuildContext context) {

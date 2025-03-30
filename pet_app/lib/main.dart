@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/database_services.dart';
+import 'package:pet_app/log_history_page.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'register_page.dart';
 import 'login_page.dart';
+import 'log_history_page.dart';
 import 'settings_page.dart';
 import 'pet_guide_page.dart';
 import 'app_colors.dart';
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key, required this.title,required this.userId, required this.petId});
-
+  //create required variables, userId, petId needed from database 
   final String title;
   final int userId;
   final int petId;
@@ -54,6 +56,7 @@ class _MainPageState extends State<MainPage> {
   //create instance of database service
   final DatabaseServices _databaseService = DatabaseServices.instance;
 
+  //use these variables for page control
   int currentPageIndex = 0;
   late PageController _pageController;
 
@@ -86,11 +89,13 @@ class _MainPageState extends State<MainPage> {
               });
             },
             children: [
+              //container for the main page
               Container(color: AppColors.background,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [ 
+                    //button for registration
                     ElevatedButton(
                       onPressed: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) =>  RegisterPage())),
@@ -109,11 +114,18 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
                 ),
+              //container for the pet guide
               Container(color: AppColors.background,
               child: Center(
                 child: PetGuidePage(),
               ),
               ),
+              Container(color: AppColors.background,
+              child: Center(
+                child: LogHistoryPage(),
+              ),
+              ),
+              //container for the settings page
               Container(color: AppColors.background,
               child: Center(
                 child: SettingsPage(databaseService: _databaseService),
@@ -138,6 +150,11 @@ class _MainPageState extends State<MainPage> {
             BottomNavyBarItem(
               icon: Icon(Icons.pets),
               title: Text("Pet Guide"),
+              activeColor: AppColors.accent1,
+            ),
+            BottomNavyBarItem(
+              icon: Icon(Icons.history),
+              title: Text("Log History"),
               activeColor: AppColors.accent1,
             ),
             BottomNavyBarItem(
