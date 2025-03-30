@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/database_services.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/services.dart';
 import 'app_colors.dart';
+import 'user_state.dart';
 import 'login_page.dart';
 import 'main.dart';
 
@@ -14,7 +12,7 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {  
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final DatabaseServices _databaseService = DatabaseServices.instance;
 
@@ -22,7 +20,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _petNameController = TextEditingController();
-  final TextEditingController _reminderController = TextEditingController();
+  final TextEditingController _waterScheduleController = TextEditingController();
+  final TextEditingController _foodScheduleController = TextEditingController();
 
   @override
   void dispose() {
@@ -30,50 +29,53 @@ class _RegisterPageState extends State<RegisterPage> {
     _passwordController.dispose();
     _firstNameController.dispose();
     _petNameController.dispose();
-    _reminderController.dispose();
+    _waterScheduleController.dispose();
+    _foodScheduleController.dispose();
     super.dispose();
-  } 
+  }
 
-    void _registerUser() async {
+  void _registerUser() async {
     if (_formKey.currentState!.validate()) {
       String username = _usernameController.text.trim();
       String password = _passwordController.text.trim();
       String firstName = _firstNameController.text.trim();
       String petName = _petNameController.text.trim();
-      int? reminderInterval = int.tryParse(_reminderController.text.trim());
+      int? waterSchedule = int.tryParse(_waterScheduleController.text.trim());
+      int? foodSchedule = int.tryParse(_foodScheduleController.text.trim());
 
-      if (reminderInterval == null || reminderInterval <= 0) {
+      if (waterSchedule == null || waterSchedule <= 0 || foodSchedule == null || foodSchedule <= 0) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Enter a valid reminder interval')),
+          const SnackBar(content: Text('Enter valid schedule values')),
         );
         return;
       }
 
+      UserState localStorage = UserState();
+
       try {
-        // Add user to the database and get the user ID
         final userId = await _databaseService.addLogin(username, password, firstName);
-        final petId = await _databaseService.addPet(petName, reminderInterval, userId);
+        final petId = await _databaseService.addPet(petName, waterSchedule, foodSchedule, userId);
 
+        localStorage.userId = userId;
+        localStorage.petId = petId;
 
-        // Navigate to the main page with the user ID and petId
         if (mounted) {
-          //dispose();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => MainPage(title: 'Pet Care App', userId: userId, petId: petId,),
+              builder: (context) => MainPage(title: 'Pet Care App', credentials: localStorage),
             ),
           );
         }
       } catch (e) {
-        //dispose();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Error during registration: $e')),
           );
-        
-    }}}}
-  
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,64 +85,47 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          child: ListView(
             children: [
               TextFormField(
                 controller: _usernameController,
                 decoration: const InputDecoration(labelText: 'Username'),
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Enter a username'
-                            : null,
+                validator: (value) => value == null || value.isEmpty ? 'Enter a username' : null,
               ),
               TextFormField(
                 controller: _passwordController,
                 decoration: const InputDecoration(labelText: 'Password'),
                 obscureText: true,
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Enter a password'
-                            : null,
+                validator: (value) => value == null || value.isEmpty ? 'Enter a password' : null,
               ),
               TextFormField(
                 controller: _firstNameController,
                 decoration: const InputDecoration(labelText: 'First Name'),
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Enter your first name'
-                            : null,
+                validator: (value) => value == null || value.isEmpty ? 'Enter your first name' : null,
               ),
               TextFormField(
                 controller: _petNameController,
                 decoration: const InputDecoration(labelText: 'Pet Name'),
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Enter your pet\'s name'
-                            : null,
+                validator: (value) => value == null || value.isEmpty ? 'Enter your pet\'s name' : null,
               ),
               TextFormField(
-                controller: _reminderController,
-                decoration: const InputDecoration(
-                  labelText: 'Remind every (hours)',
-                ),
+                controller: _waterScheduleController,
+                decoration: const InputDecoration(labelText: 'Water every (hours)'),
                 keyboardType: TextInputType.number,
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Enter a reminder interval'
-                            : null,
+                validator: (value) => value == null || value.isEmpty ? 'Enter water schedule' : null,
+              ),
+              TextFormField(
+                controller: _foodScheduleController,
+                decoration: const InputDecoration(labelText: 'Feed every (hours)'),
+                keyboardType: TextInputType.number,
+                validator: (value) => value == null || value.isEmpty ? 'Enter food schedule' : null,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _registerUser,
                 child: const Text('Register'),
               ),
-              ElevatedButton(
+              TextButton(
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginPage()),

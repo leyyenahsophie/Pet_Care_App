@@ -10,6 +10,7 @@ import 'log_history_page.dart';
 import 'settings_page.dart';
 import 'pet_guide_page.dart';
 import 'app_colors.dart';
+import 'user_state.dart';
 
 void main() {
   // Initialize FFI for sqflite
@@ -25,28 +26,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final userState = UserState();
+
     return MaterialApp(
       title: 'Pet Care App',
       initialRoute: '/register',
       routes: {
         '/register': (context) => const RegisterPage(),
-        '/main': (context) => const MainPage(title: 'Pet Care App', userId: 0, petId: 0),
+        '/main': (context) => MainPage(title: 'Pet Care App', credentials: userState),
       },
       theme: ThemeData(
         // This is the theme of your application.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MainPage(title: 'Pet App Main Page', userId: 0, petId: 0),
+      home: MainPage(title: 'Pet App Main Page', credentials: userState),
     );
   }
 }
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key, required this.title,required this.userId, required this.petId});
-  //create required variables, userId, petId needed from database 
+  const MainPage({super.key, required this.title,required this.credentials});
+  //create required variables, credentials 
   final String title;
-  final int userId;
-  final int petId;
+  final UserState credentials;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -56,11 +58,13 @@ class _MainPageState extends State<MainPage> {
   //create instance of database service
   final DatabaseServices _databaseService = DatabaseServices.instance;
 
+
   //use these variables for page control
   int currentPageIndex = 0;
   late PageController _pageController;
 
   @override
+
   void initState() {
     super.initState();
     _pageController = PageController();
@@ -74,6 +78,9 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+  final int? petId = widget.credentials.petId;
+  final int? userId = widget.credentials.userId;
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -102,7 +109,7 @@ class _MainPageState extends State<MainPage> {
                       child: const Text('Register'),
                     ),
                     FutureBuilder<String?>(
-                      future: _databaseService.getFirstName(widget.userId),
+                      future: _databaseService.getFirstName(userId),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Text(snapshot.data ?? 'No name found');
@@ -128,7 +135,7 @@ class _MainPageState extends State<MainPage> {
               //container for the settings page
               Container(color: AppColors.background,
               child: Center(
-                child: SettingsPage(databaseService: _databaseService),
+                child: SettingsPage(databaseService: _databaseService, credentials: widget.credentials),
               ),
               ),
             ],
