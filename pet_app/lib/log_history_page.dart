@@ -5,11 +5,14 @@ import 'app_colors.dart';
 import 'login_page.dart';
 
 class LogHistoryPage extends StatefulWidget {
-  const LogHistoryPage({super.key});
+  final int userId;
+
+  const LogHistoryPage({super.key, required this.userId});
 
   @override
   State<LogHistoryPage> createState() => _LogHistoryPageState();
 }
+
 
 class _LogHistoryPageState extends State<LogHistoryPage> {
   final DatabaseServices _databaseService = DatabaseServices.instance;
@@ -22,12 +25,13 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
   }
 
   Future<void> _fetchLogs() async {
-    final db = await _databaseService.database;
-    final result = await db.query('log');
-    setState(() {
-      _logs = result;
-    });
-  }
+  final logs = await _databaseService.getLogsForUser(widget.userId);
+  setState(() {
+    _logs = logs;
+  });
+}
+
+
 
   @override
   Widget build(BuildContext context) {

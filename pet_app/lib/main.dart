@@ -9,8 +9,6 @@ import 'login_page.dart';
 import 'log_history_page.dart';
 import 'settings_page.dart';
 import 'pet_guide_page.dart';
-import 'reminders_section.dart';
-import 'log_section.dart';
 import 'app_colors.dart';
 import 'user_state.dart';
 
@@ -41,7 +39,7 @@ class MyApp extends StatelessWidget {
         // This is the theme of your application.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const RegisterPage(),
+      home: MainPage(title: 'Pet App Main Page', credentials: userState),
     );
   }
 }
@@ -86,7 +84,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.banner,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text("Pet Care App"),
         ),
         body: SizedBox.expand(
@@ -104,6 +102,12 @@ class _MainPageState extends State<MainPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [ 
+                    //button for registration
+                    ElevatedButton(
+                      onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) =>  RegisterPage())),
+                      child: const Text('Register'),
+                    ),
                     FutureBuilder<String?>(
                       future: _databaseService.getFirstName(userId),
                       builder: (context, snapshot) {
@@ -125,7 +129,7 @@ class _MainPageState extends State<MainPage> {
               ),
               Container(color: AppColors.background,
               child: Center(
-                child: LogHistoryPage(),
+                child: LogHistoryPage(userId: userId!),
               ),
               ),
               //container for the settings page
