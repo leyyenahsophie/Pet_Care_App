@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         // This is the theme of your application.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: MainPage(title: 'Pet App Main Page', credentials: userState),
+      home: const RegisterPage(),
     );
   }
 }
@@ -84,7 +84,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: AppColors.banner,
           title: Text("Pet Care App"),
         ),
         body: SizedBox.expand(
@@ -102,12 +102,6 @@ class _MainPageState extends State<MainPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [ 
-                    //button for registration
-                    ElevatedButton(
-                      onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  RegisterPage())),
-                      child: const Text('Register'),
-                    ),
                     FutureBuilder<String?>(
                       future: _databaseService.getFirstName(userId),
                       builder: (context, snapshot) {

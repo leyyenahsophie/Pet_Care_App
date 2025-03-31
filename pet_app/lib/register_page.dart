@@ -50,6 +50,17 @@ class _RegisterPageState extends State<RegisterPage> {
         return;
       }
 
+      // Check if username is already taken
+      bool isTaken = await _databaseService.isUsernameTaken(username);
+      if (isTaken) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Username is already taken')),
+          );
+        }
+        return;
+      }
+
       UserState localStorage = UserState();
 
       try {

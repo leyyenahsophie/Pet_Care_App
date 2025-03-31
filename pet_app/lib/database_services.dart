@@ -199,4 +199,14 @@ class DatabaseServices {
     );
     return results.isNotEmpty ? results.first['id'] as int : null;
   }
+
+  Future<bool> isUsernameTaken(String username) async {
+    final db = await database;
+    final results = await db.query(
+      _loginTableName,
+      where: '$_usernameColumn = ?',
+      whereArgs: [username],
+    );
+    return results.isNotEmpty;
+  }
 }
