@@ -89,6 +89,9 @@ class LoginPageState extends State<LoginPage> {
                         _localStorage.userId = userId;
                         _localStorage.username = username;
                         _localStorage.petId = petId;
+                        _localStorage.petName = await _databaseService.getPetName(userId, petId);
+                        _localStorage.firstName = await _databaseService.getFirstName(userId);
+
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(

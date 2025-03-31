@@ -160,6 +160,18 @@ class DatabaseServices {
     return maps.isNotEmpty ? maps.first['id'] as int : null;
   }
 
+    Future<int?> getWaterSchedule(int? id) async {
+    final db = await database;
+    final maps = await db.query(_petTableName, where: 'id = ?', whereArgs: [id]);
+    return maps.isNotEmpty ? maps.first[_petWaterScheduleColumn] as int : null;
+  }
+
+    Future<int?> getFoodSchedule(int? id) async {
+    final db = await database;
+    final maps = await db.query(_petTableName, where: 'id = ?', whereArgs: [id]);
+    return maps.isNotEmpty ? maps.first[_petFoodScheduleColumn] as int : null;
+  }
+
   Future<void> updateReminders(int? petId, int? newWater, int? newFood) async {
     final db = await database;
 

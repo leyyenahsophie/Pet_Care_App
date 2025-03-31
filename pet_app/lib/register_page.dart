@@ -56,6 +56,9 @@ class _RegisterPageState extends State<RegisterPage> {
         final userId = await _databaseService.addLogin(username, password, firstName);
         final petId = await _databaseService.addPet(petName, waterSchedule, foodSchedule, userId);
 
+        localStorage.petName = petName;
+        localStorage.username = username;
+        localStorage.firstName = firstName;
         localStorage.userId = userId;
         localStorage.petId = petId;
 

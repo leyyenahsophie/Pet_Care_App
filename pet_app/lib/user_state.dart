@@ -5,5 +5,7 @@ class UserState {
 
   int? userId;
   String? username;
+  String? petName;
+  String? firstName;
   int? petId;
 } 
