@@ -9,6 +9,8 @@ import 'login_page.dart';
 import 'log_history_page.dart';
 import 'settings_page.dart';
 import 'pet_guide_page.dart';
+import 'reminders_section.dart';
+import 'log_section.dart';
 import 'app_colors.dart';
 import 'user_state.dart';
 
@@ -111,6 +113,8 @@ class _MainPageState extends State<MainPage> {
                         return const CircularProgressIndicator();
                       },
                     ),
+                    RemindersSection(),
+                    LogSection(),
                   ],
                 ),
               ),
