@@ -113,8 +113,6 @@ class _MainPageState extends State<MainPage> {
                         return const CircularProgressIndicator();
                       },
                     ),
-                    RemindersSection(),
-                    LogSection(),
                   ],
                 ),
               ),
