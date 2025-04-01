@@ -19,7 +19,6 @@ class LogHistoryPage extends StatefulWidget {
   State<LogHistoryPage> createState() => _LogHistoryPageState();
 }
 
-
 class _LogHistoryPageState extends State<LogHistoryPage> {
   final DatabaseServices _databaseService = DatabaseServices.instance;
   List<Map<String, dynamic>> _logs = [];
@@ -81,21 +80,22 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
               _logs.isEmpty
                   ? const Text("No logs available.")
                   : DataTable(
-                      columns: const [
-                        DataColumn(label: Text("Date")),
-                        DataColumn(label: Text("Type")),
-                        DataColumn(label: Text("Description")),
-                      ],
-                      rows: _logs.map((log) {
-                        return DataRow(
-                          cells: [
-                            DataCell(Text(log['logDate'].toString())),
-                            DataCell(Text(log['logType'].toString())),
-                            DataCell(Text(log['logDescription'].toString())),
-                          ],
-                        );
-                      }).toList(),
-                    ),
+                    columns: const [
+                      DataColumn(label: Text("Date")),
+                      DataColumn(label: Text("Type")),
+                      DataColumn(label: Text("Description")),
+                    ],
+                    rows:
+                        _logs.map((log) {
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(log['logDate'].toString())),
+                              DataCell(Text(log['logType'].toString())),
+                              DataCell(Text(log['logDescription'].toString())),
+                            ],
+                          );
+                        }).toList(),
+                  ),
             ],
           ),
         ),
