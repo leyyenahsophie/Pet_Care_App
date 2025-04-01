@@ -35,52 +35,7 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
       backgroundColor: AppColors.background,
       body: Center(
         child: Container(
-          width: 851,
-          margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
-          padding: const EdgeInsets.all(24),
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-              side: const BorderSide(
-                width: 1,
-                color: Colors.black12,
-                strokeAlign: BorderSide.strokeAlignCenter,
-              ),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                "Log History",
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF507E7F),
-                ),
-              ),
-              const SizedBox(height: 24),
-              _logs.isEmpty
-                  ? const Text("No logs available.")
-                  : DataTable(
-                      columns: const [
-                        DataColumn(label: Text("Date")),
-                        DataColumn(label: Text("Type")),
-                        DataColumn(label: Text("Description")),
-                      ],
-                      rows: _logs.map((log) {
-                        return DataRow(
-                          cells: [
-                            DataCell(Text(log['logDate'].toString())),
-                            DataCell(Text(log['logType'].toString())),
-                            DataCell(Text(log['logDescription'].toString())),
-                          ],
-                        );
-                      }).toList(),
-                    ),
-            ],
-          ),
+          child: Text('Log History'),
         ),
       ),
     );

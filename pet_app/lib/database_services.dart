@@ -20,6 +20,10 @@ class DatabaseServices {
   final String _logDateColumn = 'logDate';
   final String _logTypeColumn = 'logType';
   final String _logDescriptionColumn = 'logDescription';
+  final String _reminderTableName = 'reminder';
+  final String _reminderTypeColumn = 'reminderType';
+  final String _reminderTimeColumn = 'reminderTime';
+
 
   DatabaseServices._constructor();
 
@@ -101,6 +105,16 @@ class DatabaseServices {
         $_logDateColumn TEXT NOT NULL,  
         $_logTypeColumn TEXT NOT NULL,
         $_logDescriptionColumn TEXT NOT NULL,
+        FOREIGN KEY (petId) REFERENCES $_petTableName(id)
+      )
+    ''');
+
+      await db.execute('''
+      CREATE TABLE IF NOT EXISTS $_reminderTableName (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        petId INTEGER NOT NULL,
+        $_reminderTypeColumn TEXT NOT NULL,
+        $_reminderTimeColumn TEXT NOT NULL,
         FOREIGN KEY (petId) REFERENCES $_petTableName(id)
       )
     ''');
@@ -189,6 +203,28 @@ class DatabaseServices {
       whereArgs: [petId],
     );
   }
+
+  Future<void> logWater(int petId, String logDescription) async {
+    final db = await database;
+    await db.insert(_logTableName, {
+      _logDateColumn: DateTime.now().toIso8601String(),
+      _logTypeColumn: 'water',
+      _logDescriptionColumn: logDescription,
+      'petId': petId,
+    });
+  }
+
+  Future<void> logFood(int petId, String logDescription) async {
+    final db = await database;
+    await db.insert(_logTableName, {
+      _logDateColumn: DateTime.now().toIso8601String(),
+      _logTypeColumn: 'food',
+      _logDescriptionColumn: logDescription,
+      'petId': petId,
+    });
+  }
+
+  
 
   Future<int?> verifyLogin(String username, String password) async {
     final db = await database;

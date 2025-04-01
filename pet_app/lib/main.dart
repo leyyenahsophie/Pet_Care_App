@@ -78,6 +78,11 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
+    String capitalizeFirstLetter(String text) {
+    if (text.isEmpty) return text;
+    return text[0].toUpperCase() + text.substring(1);
+  }
+
   @override
   Widget build(BuildContext context) {
   final int? petId = widget.credentials.petId;
@@ -99,24 +104,38 @@ class _MainPageState extends State<MainPage> {
             },
             children: [
               //container for the main page
-              Container(color: AppColors.background,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [ 
-                    FutureBuilder<String?>(
-                      future: _databaseService.getFirstName(userId),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Text(snapshot.data ?? 'No name found');
-                        }
-                        return const CircularProgressIndicator();
-                      },
+              Container(
+                color: AppColors.background,
+                child: Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [ 
+                        FutureBuilder<String?>(
+                          future: _databaseService.getFirstName(userId),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Text('Hey, ${capitalizeFirstLetter(snapshot.data ?? '')}',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 32,
+                                fontFamily: 'Judson',
+                                fontWeight: FontWeight.w700,
+                              ),
+                              ); 
+                            }
+                            return const CircularProgressIndicator();
+                          },
+                        ),
+                        RemindersSection(),
+                        LogSection(userState: widget.credentials),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-                ),
               //container for the pet guide
               Container(color: AppColors.background,
               child: Center(
