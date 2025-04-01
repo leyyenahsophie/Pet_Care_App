@@ -149,6 +149,17 @@ class DatabaseServices {
       'petId': petId,
     });
   }
+  Future<List<Map<String, dynamic>>> getLogsForUser(int userId) async {
+  final db = await database;
+  return await db.rawQuery('''
+    SELECT log.$_logDateColumn, log.$_logTypeColumn, log.$_logDescriptionColumn
+    FROM $_logTableName log
+    JOIN $_petTableName pet ON log.petId = pet.id
+    WHERE pet.userId = ?
+    ORDER BY log.$_logDateColumn DESC
+  ''', [userId]);
+}
+
 
   Future<String?> getFirstName(int? userId) async {
     final db = await database;
@@ -261,8 +272,8 @@ class DatabaseServices {
     );
     return results.isNotEmpty ? results.first['id'] as int : null;
   }
-
-  Future<bool> isUsernameTaken(String username) async {
+  
+    Future<bool> isUsernameTaken(String username) async {
     final db = await database;
     final results = await db.query(
       _loginTableName,

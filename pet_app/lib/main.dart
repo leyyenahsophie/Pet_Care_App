@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         // This is the theme of your application.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const RegisterPage(),
+      home: MainPage(title: 'Pet App Main Page', credentials: userState),
     );
   }
 }
@@ -91,7 +91,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.banner,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text("Pet Care App"),
         ),
         body: SizedBox.expand(
