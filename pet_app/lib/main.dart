@@ -144,7 +144,7 @@ class _MainPageState extends State<MainPage> {
               ),
               Container(color: AppColors.background,
               child: Center(
-                child: LogHistoryPage(),
+                child: LogHistoryPage(userState: widget.credentials),
               ),
               ),
               //container for the settings page

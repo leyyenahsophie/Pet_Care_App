@@ -224,7 +224,15 @@ class DatabaseServices {
     });
   }
 
-  
+  Future<List<Map<String, dynamic>>> getLogsForUser(int? petId) async {
+    final db = await database;
+    final results = await db.query(
+      _logTableName,
+      where: 'petId = ?',
+      whereArgs: [petId],
+    );
+    return results;
+  }
 
   Future<int?> verifyLogin(String username, String password) async {
     final db = await database;

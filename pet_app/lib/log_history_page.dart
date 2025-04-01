@@ -3,11 +3,11 @@ import 'package:pet_app/database_services.dart';
 import 'package:flutter/services.dart';
 import 'app_colors.dart';
 import 'login_page.dart';
+import 'user_state.dart';
 
 class LogHistoryPage extends StatefulWidget {
-  final int userId;
-
-  const LogHistoryPage({super.key, required this.userId});
+  const LogHistoryPage({super.key, required this.userState});
+  final UserState userState;
 
   @override
   State<LogHistoryPage> createState() => _LogHistoryPageState();
@@ -25,13 +25,11 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
   }
 
   Future<void> _fetchLogs() async {
-  final logs = await _databaseService.getLogsForUser(widget.userId);
+  final logs = await _databaseService.getLogsForUser(widget.userState.petId);
   setState(() {
     _logs = logs;
   });
 }
-
-
 
   @override
   Widget build(BuildContext context) {
