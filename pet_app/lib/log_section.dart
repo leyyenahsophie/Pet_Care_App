@@ -88,7 +88,7 @@ class _LogSectionState extends State<LogSection> {
                         Expanded(
                           child: FormBuilderDateTimePicker(
                             name: 'date',
-                            format: DateFormat('yyyy-MM-dd'),
+                            format: DateFormat('yyyy-MM-dd HH:mm'),
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Date & Time of Water Log',
@@ -180,7 +180,7 @@ class _LogSectionState extends State<LogSection> {
                         Expanded(
                           child: FormBuilderDateTimePicker(
                             name: 'date',
-                            format: DateFormat('yyyy-MM-dd'),
+                            format: DateFormat('yyyy-MM-dd HH:mm'),
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Date & Time of Food Log',

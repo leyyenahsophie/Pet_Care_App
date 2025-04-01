@@ -151,10 +151,16 @@ class _SettingsPageState extends State<SettingsPage> {
                       context,
                       MaterialPageRoute(builder: (context) => RegisterPage()),
                     ),
-                child: const Text('Log Out'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.banner,
-                  textStyle: TextStyle(color: AppColors.textPrimary),
+                  backgroundColor: AppColors.primary,
+                  textStyle: TextStyle(color: AppColors.background),
+                ),
+                child: const Text('Log Out',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.background,
+                ),
                 ),
               ),
               SizedBox(height: 20),
@@ -261,8 +267,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               style: TextStyle(
                                 color: AppColors.textPrimary,
                                 fontSize: 25,
-                                fontFamily: 'Judson',
-                                fontWeight: FontWeight.w400,
                               ),
                             );
                           } else if (snapshot.hasError) {
@@ -311,8 +315,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         style: TextStyle(
                           color: AppColors.textPrimary,
                           fontSize: 40,
-                          fontFamily: 'Julius Sans One',
-                          fontWeight: FontWeight.w400,
                         ),
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -377,9 +379,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             padding: const EdgeInsets.all(16.0),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.banner,
+                                backgroundColor: AppColors.primary,
                                 textStyle: TextStyle(
-                                  color: AppColors.textPrimary,
+                                  color: AppColors.background,
                                 ),
                               ),
                               onPressed: () async {
@@ -388,7 +390,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                   changeReminders();
                                 }
                               },
-                              child: const Text('Change'),
+                              child: const Text('Change',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.background,
+                              ),
+                              ),
                             ),
                           ),
                         ],

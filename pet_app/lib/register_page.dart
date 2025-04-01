@@ -149,15 +149,30 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                ),
                 onPressed: _registerUser,
-                child: const Text('Register'),
+                child: const Text('Register',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.background,
+                ),
+                ),
               ),
               TextButton(
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginPage()),
                 ),
-                child: const Text('Already have an account? Login'),
+                child: const Text('Already have an account? Login',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+                ),
               ),
             ],
           ),
