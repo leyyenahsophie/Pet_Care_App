@@ -129,7 +129,7 @@ class _MainPageState extends State<MainPage> {
                             return const CircularProgressIndicator();
                           },
                         ),
-                        RemindersSection(),
+                        RemindersSection(userState: widget.credentials),
                         LogSection(userState: widget.credentials),
                       ],
                     ),

@@ -73,6 +73,19 @@ class _RegisterPageState extends State<RegisterPage> {
         localStorage.userId = userId;
         localStorage.petId = petId;
 
+        // Create initial reminders
+        final now = DateTime.now();
+        await _databaseService.createReminder(
+          petId,
+          'Water Reminder',
+          now.toIso8601String(),
+        );
+        await _databaseService.createReminder(
+          petId,
+          'Food Reminder',
+          now.toIso8601String(),
+        );
+
         if (mounted) {
           Navigator.pushReplacement(
             context,

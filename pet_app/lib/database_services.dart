@@ -224,6 +224,24 @@ class DatabaseServices {
     });
   }
 
+  Future<void> createReminder(int petId, String type, String time) async {
+    final db = await database;
+    await db.insert(_reminderTableName, {
+      'petId': petId,
+      _reminderTypeColumn: type,
+      _reminderTimeColumn: time,
+    });
+  }
+
+  Future<void> deleteReminder(int id) async {
+    final db = await database;
+    await db.delete(
+      _reminderTableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<List<Map<String, dynamic>>> getLogsForUser(int? petId) async {
     final db = await database;
     final results = await db.query(
