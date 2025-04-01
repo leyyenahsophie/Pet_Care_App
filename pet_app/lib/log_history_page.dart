@@ -6,14 +6,8 @@ import 'login_page.dart';
 import 'user_state.dart';
 
 class LogHistoryPage extends StatefulWidget {
-<<<<<<< HEAD
   const LogHistoryPage({super.key, required this.userState});
   final UserState userState;
-=======
-  final int userId;
-
-  const LogHistoryPage({super.key, required this.userId});
->>>>>>> 8d71fc63e080628aff78f4f9a1d243795a92ffc0
 
   @override
   State<LogHistoryPage> createState() => _LogHistoryPageState();
@@ -30,20 +24,13 @@ class _LogHistoryPageState extends State<LogHistoryPage> {
   }
 
   Future<void> _fetchLogs() async {
-<<<<<<< HEAD
-  final logs = await _databaseService.getLogsForUser(widget.userState.petId);
-=======
-  final logs = await _databaseService.getLogsForUser(widget.userId);
->>>>>>> 8d71fc63e080628aff78f4f9a1d243795a92ffc0
+
+  final logs = await _databaseService.getLogsForUser(widget.userState.petId!);
+
   setState(() {
     _logs = logs;
   });
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 8d71fc63e080628aff78f4f9a1d243795a92ffc0
 
   @override
   Widget build(BuildContext context) {

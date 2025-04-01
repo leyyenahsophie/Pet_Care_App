@@ -253,7 +253,7 @@ class DatabaseServices {
     );
   }
 
-  Future<List<Map<String, dynamic>>> getLogsForUser(int? petId) async {
+  Future<List<Map<String, dynamic>>> getLogsForPet(int? petId) async {
     final db = await database;
     final results = await db.query(
       _logTableName,
